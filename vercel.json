@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-    "src": "hospital/wsgi.py",
+    "src": "stockmgt/wsgi.py",
       "use": "@vercel/python",
       "config": { "maxLambdaSize": "15mb", "runtime": "python3.12.3" }
     },
@@ -21,7 +21,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "hospital/wsgi.py"
+      "dest": "stockmgt/wsgi.py"
       
     }
   ]

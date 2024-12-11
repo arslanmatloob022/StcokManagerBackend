@@ -6,6 +6,7 @@ drf-yasg==1.21.8
 inflection==0.5.1
 packaging==24.2
 psycopg2==2.9.10
+psycopg2-binary==2.9.10
 pytz==2024.2
 PyYAML==6.0.2
 sqlparse==0.5.3

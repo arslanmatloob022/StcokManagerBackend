@@ -73,3 +73,9 @@ class UserViewSet(viewsets.GenericViewSet,mixins.ListModelMixin, mixins.Retrieve
     serializer_class = UserSerializer
     permission_classes = ([IsAuthenticated ])
     http_method_names = ['get','post','put', 'delete','patch']
+
+
+class StoreViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = ([IsAuthenticated ])

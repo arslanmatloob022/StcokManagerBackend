@@ -38,3 +38,8 @@ class LoginSerializer(serializers.Serializer):
 
 class logoutSerializer(serializers.Serializer):
     refresh = serializers.CharField(max_length = 400)
+
+
+class StoreSerializer(serializers.Serializer):
+    class Meta:
+        fields = '__all__'

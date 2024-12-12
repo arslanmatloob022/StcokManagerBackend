@@ -8,6 +8,8 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 
+from store.utils import server_running
+
 sw='swagger/'
 SchemaView = get_schema_view(
     openapi.Info(
@@ -19,6 +21,8 @@ SchemaView = get_schema_view(
 )
 
 urlpatterns = [
+    path('', server_running),
+
     path('admin/', admin.site.urls),
     path('api/', include('store.urls')),
 

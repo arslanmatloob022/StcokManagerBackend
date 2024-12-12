@@ -3,6 +3,8 @@ from django.db import models
 import uuid
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
+from store.choice import UserRoleChoice
+
 class Store(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
@@ -34,6 +36,8 @@ class CustomUser(AbstractBaseUser,PermissionsMixin):
     phone_number = models.CharField(max_length=15,blank=True, null=True)
     username = models.CharField(max_length=30, blank=True, null=True)
     store = models.ForeignKey(Store, on_delete=models.CASCADE, null=True, blank=True)
+    role = models.CharField(max_length=20,choices=UserRoleChoice.choices,default=UserRoleChoice.SUPER_ADMIN)
+
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=True)

@@ -68,14 +68,14 @@ class UserTokenViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     
 
 
-class UserViewSet(viewsets.GenericViewSet,mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+class UserViewSet(viewsets.GenericViewSet,mixins.CreateModelMixin,mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
     permission_classes = ([IsAuthenticated ])
     http_method_names = ['get','post','put', 'delete','patch']
 
 
-class StoreViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+class StoreViewSet(viewsets.GenericViewSet,mixins.CreateModelMixin, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
     permission_classes = ([IsAuthenticated ])

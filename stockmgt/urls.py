@@ -13,7 +13,7 @@ from store.utils import server_running
 sw='swagger/'
 SchemaView = get_schema_view(
     openapi.Info(
-        title="AREZ API",
+        title="Store MGT API",
         default_version='3.0.0',
     ),
     public=False,

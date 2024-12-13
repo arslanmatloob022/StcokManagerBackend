@@ -61,7 +61,7 @@ def server_running(request):
     <div>
     	<img src="https://vms.arez.io/images/logos/favicon_512x512.png">
         </div>
-        <h1>VMS-Store MGT server is online and operational.</h1> 
+        <h1>Store MGT server is online and operational.</h1> 
         <h5 class="text-center">V 3.10</h5>
     </body>
     </html>

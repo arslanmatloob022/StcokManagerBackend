@@ -11,6 +11,7 @@ drf-yasg==1.21.8
 idna==3.10
 inflection==0.5.1
 packaging==24.2
+psycopg2
 psycopg2-binary
 PyJWT==2.10.1
 pytz==2024.2

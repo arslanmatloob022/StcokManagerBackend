@@ -1,3 +1,4 @@
+from ast import Store
 from uuid import UUID
 from django.shortcuts import get_object_or_404
 
@@ -42,4 +43,5 @@ class logoutSerializer(serializers.Serializer):
 
 class StoreSerializer(serializers.Serializer):
     class Meta:
+        model = Store
         fields = '__all__'

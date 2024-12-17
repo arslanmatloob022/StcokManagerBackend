@@ -1,5 +1,5 @@
 from store.models import CustomUser
-from store.serializers import LoginSerializer, UserSerializer, logoutSerializer
+from store import serializers
 from rest_framework import viewsets, status, mixins
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.decorators import action
@@ -10,14 +10,14 @@ from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 
 class AuthViewSet(viewsets.GenericViewSet):
     queryset = CustomUser.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = serializers.UserSerializer
     permission_classes = (AllowAny,)
 
     @action(
         detail=False,
         methods=('POST',),
         url_path='login',
-        serializer_class=LoginSerializer,
+        serializer_class=serializers.LoginSerializer,
     )
     def login(self, request):
         serializer = self.get_serializer(data=request.data)
@@ -45,7 +45,7 @@ class AuthViewSet(viewsets.GenericViewSet):
         detail=False,
         methods=('POST',),
         url_path='logout',
-        serializer_class=logoutSerializer,
+        serializer_class=serializers.logoutSerializer,
         permission_classes=([IsAuthenticated])
 
     )
@@ -59,7 +59,7 @@ class AuthViewSet(viewsets.GenericViewSet):
         return Response("Successful Logout", status=status.HTTP_200_OK)
 
 class UserTokenViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
-    serializer_class = UserSerializer
+    serializer_class = serializers.UserSerializer
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
         email = self.request.user.email
@@ -70,12 +70,12 @@ class UserTokenViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
 
 class UserViewSet(viewsets.GenericViewSet,mixins.CreateModelMixin,mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
     queryset = CustomUser.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = serializers.UserSerializer
     permission_classes = ([IsAuthenticated ])
     http_method_names = ['get','post','put', 'delete','patch']
 
 
-class StoreViewSet(viewsets.GenericViewSet,mixins.CreateModelMixin, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+class StoreViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
     queryset = CustomUser.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = serializers.StoreSerializer
     permission_classes = ([IsAuthenticated ])

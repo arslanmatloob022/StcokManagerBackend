@@ -1,4 +1,4 @@
-from store.models import CustomUser
+from store.models import CustomUser, Store
 from store import serializers
 from rest_framework import viewsets, status, mixins
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
@@ -76,6 +76,6 @@ class UserViewSet(viewsets.GenericViewSet,mixins.CreateModelMixin,mixins.ListMod
 
 
 class StoreViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
-    queryset = CustomUser.objects.all()
+    queryset = Store.objects.all()
     serializer_class = serializers.StoreSerializer
     permission_classes = ([IsAuthenticated ])

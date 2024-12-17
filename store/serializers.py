@@ -1,9 +1,8 @@
-from ast import Store
 from uuid import UUID
 from django.shortcuts import get_object_or_404
 
 from rest_framework import serializers
-from . models import CustomUser
+from . models import CustomUser, Store
 from django.contrib.auth.models import  Group, Permission
 from rest_framework import serializers
 
@@ -41,7 +40,7 @@ class logoutSerializer(serializers.Serializer):
     refresh = serializers.CharField(max_length = 400)
 
 
-class StoreSerializer(serializers.Serializer):
+class StoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Store
         fields = '__all__'

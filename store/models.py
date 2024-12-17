@@ -4,6 +4,7 @@ import uuid
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
 from store.choice import UserRoleChoice
+from store.fields import CustomDateTimeField
 
 class Store(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

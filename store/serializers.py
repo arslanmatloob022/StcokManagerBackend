@@ -2,6 +2,8 @@ from uuid import UUID
 from django.shortcuts import get_object_or_404
 
 from rest_framework import serializers
+
+from store.fields import CustomDateTimeField
 from . models import CustomUser, Store
 from django.contrib.auth.models import  Group, Permission
 from rest_framework import serializers
@@ -41,6 +43,9 @@ class logoutSerializer(serializers.Serializer):
 
 
 class StoreSerializer(serializers.ModelSerializer):
+    created_at = CustomDateTimeField()
+
+
     class Meta:
         model = Store
         fields = '__all__'

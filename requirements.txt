@@ -18,6 +18,5 @@ pytz
 PyYAML
 requests
 sqlparse
-uritemplate
 urllib3
 

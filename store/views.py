@@ -1,4 +1,4 @@
-from store.models import CustomUser, Store
+from store.models import Batch, CustomUser, Product, Store
 from store import serializers
 from rest_framework import viewsets, status, mixins
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
@@ -79,3 +79,40 @@ class StoreViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.List
     queryset = Store.objects.all()
     serializer_class = serializers.StoreSerializer
     permission_classes = ([IsAuthenticated ])
+
+class ProductViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+    queryset = Product.objects.all()
+    serializer_class = serializers.ProductSerializer
+    permission_classes = ([IsAuthenticated ])
+
+    @action(
+        detail=True,
+        methods=('GET',),
+        url_path='batches',
+        permission_classes=([IsAuthenticated])
+    )
+    def get_batches(self, request, pk):
+        product = Product.objects.get(pk=pk)
+        batches = Batch.objects.filter(product=product)
+        serializer = serializers.BatchSerializer(batches, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+    @action(
+        detail=True,
+        methods=('GET',),
+        url_path='details', 
+        permission_classes=[IsAuthenticated]
+    )
+    def get_product_details(self, request, pk):
+        product = Product.objects.get(pk=pk)
+        serializer = serializers.ProductDetailSerializer(product)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class BatchViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+    queryset = Batch.objects.all()
+    serializer_class = serializers.BatchSerializer
+    permission_classes = ([IsAuthenticated ])
+
+    

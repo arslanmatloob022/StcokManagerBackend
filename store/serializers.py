@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 
 from store.fields import CustomDateTimeField
-from . models import CustomUser, Store
+from . models import CustomUser, Store,Product,Batch
 from django.contrib.auth.models import  Group, Permission
 from rest_framework import serializers
 
@@ -48,4 +48,21 @@ class StoreSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Store
+        fields = '__all__'
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = '__all__'
+
+
+class BatchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Batch
+        fields = '__all__'
+
+class ProductDetailSerializer(serializers.ModelSerializer):
+    batches = BatchSerializer(many=True, read_only=True)
+    class Meta:
+        model = Product
         fields = '__all__'

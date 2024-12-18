@@ -34,7 +34,7 @@ class AuthViewSet(viewsets.GenericViewSet):
             data={
                 'access': access_token,
                 'refresh': refresh_token,
-                'user': UserSerializer(user).data,
+                'user': serializers.UserSerializer(user).data,
             },
             status=status.HTTP_200_OK,
         )

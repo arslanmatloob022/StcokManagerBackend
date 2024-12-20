@@ -43,7 +43,7 @@ class logoutSerializer(serializers.Serializer):
 
 
 class StoreSerializer(serializers.ModelSerializer):
-    created_at = CustomDateTimeField()
+    # created_at = CustomDateTimeField()
 
 
     class Meta:

@@ -1,4 +1,4 @@
-from store.models import Batch, CustomUser, Product, Store
+from store.models import Batch, CustomUser, Order, Product, Store
 from store import serializers
 from rest_framework import viewsets, status, mixins
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
@@ -114,5 +114,27 @@ class BatchViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.List
     queryset = Batch.objects.all()
     serializer_class = serializers.BatchSerializer
     permission_classes = ([IsAuthenticated ])
+
+
+
+class OrderViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+    queryset = Order.objects.all()
+    serializer_class = serializers.OrderSerializer
+    permission_classes = ([IsAuthenticated ])
+
+
+    @action(detail=False, methods=['post'], url_path='create-order', permission_classes=[IsAuthenticated], serializer_class = serializers.CreateOrderSerializer)
+    def create_order(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response({"message": "Order created successfully."}, status=status.HTTP_201_CREATED)
+
+
+    
+
+
+
 
     

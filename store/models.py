@@ -81,3 +81,60 @@ class Batch(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     class Meta:
         ordering = ['-created_at']
+
+
+
+
+
+
+
+class Order(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    customer_name = models.CharField(max_length=255)
+    customer_email = models.EmailField()
+    discount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    order_no = models.CharField(max_length=8, unique=True, editable=False)
+
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    status = models.CharField(
+        max_length=50,
+        choices=[
+            ('PENDING', 'Pending'),
+            ('COMPLETED', 'Completed'),
+            ('CANCELLED', 'Cancelled')
+        ],
+        default='PENDING'
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"Order {self.id} - {self.customer_name}"
+    
+    def save(self, *args, **kwargs):
+        if not self.order_no:
+            self.order_no = str(uuid.uuid4().int)[:8]  # Generate an 8-digit unique order number
+        super().save(*args, **kwargs)
+
+
+class OrderItem(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
+    batch = models.ForeignKey(Batch, on_delete=models.PROTECT, null=True, blank=True)
+    quantity = models.PositiveIntegerField()
+    price_per_unit = models.DecimalField(max_digits=10, decimal_places=2)
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return f"OrderItem {self.id} - {self.product.name}"
+
+    def save(self, *args, **kwargs):
+        self.subtotal = self.quantity * self.price_per_unit
+        super().save(*args, **kwargs)

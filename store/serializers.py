@@ -67,7 +67,10 @@ class ProductDetailSerializer(serializers.ModelSerializer):
         model = Product
         fields = '__all__'
 
-
+class OrderItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderItem
+        fields = '__all__'
 
 class OrderSerializer(serializers.ModelSerializer):
     orderItems = serializers.SerializerMethodField(read_only = True)
@@ -81,7 +84,7 @@ class OrderSerializer(serializers.ModelSerializer):
         return serializer.data
 
 
-class OrderItemSerializer(serializers.Serializer):
+class CreateOrderItemSerializer(serializers.Serializer):
     product = serializers.UUIDField()
     quantity = serializers.IntegerField()
     batch = serializers.UUIDField()
@@ -93,7 +96,7 @@ class CreateOrderSerializer(serializers.Serializer):
     customer_email = serializers.EmailField()
     status = serializers.CharField(max_length=50, required= False)
     discount = serializers.DecimalField(max_digits=10, decimal_places=2, required=False)
-    orderItems = OrderItemSerializer(many=True)
+    orderItems = CreateOrderItemSerializer(many=True)
 
     def create(self, validated_data):
         items_data = validated_data.pop('orderItems')

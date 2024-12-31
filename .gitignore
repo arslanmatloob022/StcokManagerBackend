@@ -8,6 +8,8 @@ node_modules/
 dist/
 env/
 venv/
+
+static/
 # Compiled Java class files
 *.class
 

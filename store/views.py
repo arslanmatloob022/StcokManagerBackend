@@ -85,6 +85,12 @@ class ProductViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Li
     serializer_class = serializers.ProductSerializer
     permission_classes = ([IsAuthenticated ])
 
+    @action(detail=False, methods=['get'], url_path='store/(?P<store>[a-f0-9-]{36})', permission_classes=[IsAuthenticated], serializer_class = serializers.ProductSerializer)
+    def get_store_products(self, request, store, *args, **kwargs):
+        products = Product.objects.filter(store=store)
+        data = serializers.ProductSerializer(products, many=True).data
+        return Response(data=data, status=status.HTTP_200_OK)
+
     @action(
         detail=True,
         methods=('GET',),
@@ -122,6 +128,12 @@ class OrderViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.Retrie
     serializer_class = serializers.OrderSerializer
     permission_classes = ([IsAuthenticated ])
 
+
+    @action(detail=False, methods=['get'], url_path='store/(?P<store>[a-f0-9-]{36})', permission_classes=[IsAuthenticated], serializer_class = serializers.OrderSerializer)
+    def get_store_orders(self, request, store, *args, **kwargs):
+        orders = Order.objects.filter(store=store)
+        data = serializers.OrderSerializer(orders, many=True).data
+        return Response(data=data, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=['post'], url_path='create-order', permission_classes=[IsAuthenticated], serializer_class = serializers.CreateOrderSerializer)
     def create_order(self, request, *args, **kwargs):

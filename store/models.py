@@ -96,6 +96,7 @@ class Order(models.Model):
     order_no = models.CharField(max_length=8, unique=True, editable=False)
 
     total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    store = models.ForeignKey(Store, on_delete=models.CASCADE, null=True, blank=True)
     status = models.CharField(
         max_length=50,
         choices=[

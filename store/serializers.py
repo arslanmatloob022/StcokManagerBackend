@@ -88,6 +88,7 @@ class CreateOrderItemSerializer(serializers.Serializer):
     product = serializers.UUIDField()
     quantity = serializers.IntegerField()
     batch = serializers.UUIDField()
+    store = serializers.UUIDField()
     price_per_unit = serializers.DecimalField(max_digits=10, decimal_places=2)
     subtotal = serializers.DecimalField(max_digits=10, decimal_places=2)
 
@@ -103,6 +104,7 @@ class CreateOrderSerializer(serializers.Serializer):
         order = Order.objects.create(
             customer_name=validated_data['customer_name'],
             customer_email=validated_data['customer_email'],
+            store = validated_data['store'],
             status=validated_data['status']
         )
 

@@ -30,6 +30,7 @@ urlpatterns = [
     path(sw, SchemaView.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
 ]
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
   
 

@@ -9,6 +9,8 @@ from store.fields import CustomDateTimeField
 class Store(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
+    image = models.FileField( upload_to='static/store_images/', null=True, blank=True)
+
     owner_name = models.CharField(max_length=255)
     ownerEmail = models.EmailField(null=True, blank=True)
     ownerPhone = models.CharField(max_length=15, null=True, blank=True)
@@ -59,6 +61,7 @@ class CustomUser(AbstractBaseUser,PermissionsMixin):
 
 class Product(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    image = models.FileField( upload_to='static/product_images/', null=True, blank=True)
     name = models.CharField(max_length=255)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)

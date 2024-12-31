@@ -6,6 +6,7 @@ from rest_framework.decorators import action
 from .services.authenciation_service import AuthenticationService
 from rest_framework.response import Response 
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
+from rest_framework.parsers import FormParser, MultiPartParser
 
 
 class AuthViewSet(viewsets.GenericViewSet):
@@ -28,7 +29,7 @@ class AuthViewSet(viewsets.GenericViewSet):
             serializer.validated_data['password'],
         )
 
-        access_token, refresh_token, user = AuthenticationService.login(email, password, is_superuser=False)
+        access_token, refresh_token, user = AuthenticationService.login(email, password)
 
         return Response(
             data={
@@ -84,6 +85,8 @@ class ProductViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Li
     queryset = Product.objects.all()
     serializer_class = serializers.ProductSerializer
     permission_classes = ([IsAuthenticated ])
+    parser_classes=(FormParser, MultiPartParser)
+
 
     @action(detail=False, methods=['get'], url_path='store/(?P<store>[a-f0-9-]{36})', permission_classes=[IsAuthenticated], serializer_class = serializers.ProductSerializer)
     def get_store_products(self, request, store, *args, **kwargs):

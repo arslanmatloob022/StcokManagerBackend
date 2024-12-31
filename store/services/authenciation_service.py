@@ -14,14 +14,14 @@ from store.models import CustomUser
 class AuthenticationService:
 
     @staticmethod
-    def login(email, password, is_superuser):
-        if is_superuser:
-            user: CustomUser = CustomUser.objects.filter(email=email, is_superuser=True).first()
-        else:
-            #check not for superuser
-            user: CustomUser = CustomUser.objects.filter(email=email, is_superuser=False).first()
-            if not user:
-                raise AuthenticationFailed('Only company users login allowed')
+    def login(email, password):
+        user: CustomUser = CustomUser.objects.filter(email=email, is_superuser=True).first()
+        # if is_superuser:
+        # else:
+        #     #check not for superuser
+        #     user: CustomUser = CustomUser.objects.filter(email=email, is_superuser=False).first()
+        #     if not user:
+        #         raise AuthenticationFailed('Only store users login allowed')
             
         #check if user not active
         if user is None or not user.is_active:

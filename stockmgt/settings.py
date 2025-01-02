@@ -43,11 +43,11 @@ INSTALLED_APPS = [
     'drf_yasg',
     'rest_framework',
     'corsheaders',
-    'cloudinary_storage',
-    'cloudinary',
+
     'store'
 ]
-
+    # 'cloudinary_storage',
+    # 'cloudinary',
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',

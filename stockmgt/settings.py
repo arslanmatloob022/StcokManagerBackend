@@ -208,14 +208,14 @@ SWAGGER_SETTINGS = {
 
 
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dcqeugna3',
-    'API_KEY': '424258596713575',
-    'API_SECRET': 'podU121kbELuOEEDob9w3rLQg0w'
-}
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': 'dcqeugna3',
+#     'API_KEY': '424258596713575',
+#     'API_SECRET': 'podU121kbELuOEEDob9w3rLQg0w'
+# }
 
-# MEDIA_URL = 'https://res.cloudinary.com/dcqeugna3/image/upload/'
-MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# # MEDIA_URL = 'https://res.cloudinary.com/dcqeugna3/image/upload/'
+# MEDIA_URL = '/media/'
+# # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage' 
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage' 

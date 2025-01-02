@@ -98,6 +98,9 @@ class CreateOrderSerializer(serializers.Serializer):
     status = serializers.CharField(max_length=50, required= False)
     discount = serializers.DecimalField(max_digits=10, decimal_places=2, required=False)
     orderItems = CreateOrderItemSerializer(many=True)
+    shop_name = serializers.CharField(max_length=255, required=False)
+    description = serializers.CharField(max_length=2555, required=False)
+    date_issued = serializers.DateTimeField(required=False)
 
     def create(self, validated_data):
         items_data = validated_data.pop('orderItems')
@@ -105,7 +108,10 @@ class CreateOrderSerializer(serializers.Serializer):
             customer_name=validated_data['customer_name'],
             customer_email=validated_data['customer_email'],
             store = validated_data['store'],
-            status=validated_data['status']
+            status=validated_data['status'],
+            shop_name=validated_data['shop_name'],
+            description=validated_data['description'],
+            date_issued=validated_data['date_issued']
         )
 
         total_amount = 0

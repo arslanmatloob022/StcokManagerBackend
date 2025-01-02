@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'rest_framework',
     'corsheaders',
+    'cloudinary_storage',
+    'cloudinary',
     'store'
 ]
 
@@ -202,3 +204,18 @@ SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {'api_key': {'type': 'apiKey', 'in': 'header', 'name': 'Authorization'}},
     'REFETCH_SCHEMA_WITH_AUTH': True,
 }
+
+
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dcqeugna3',
+    'API_KEY': '424258596713575',
+    'API_SECRET': 'podU121kbELuOEEDob9w3rLQg0w'
+}
+
+# MEDIA_URL = 'https://res.cloudinary.com/dcqeugna3/image/upload/'
+MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage' 

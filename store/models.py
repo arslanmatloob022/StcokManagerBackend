@@ -29,12 +29,15 @@ class CustomUserManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email, phone_number=phone_number, **extra_fields)
         user.set_password(password)
+        user.is_active(True)
         user.save(using=self._db)
+        
         return user
 
     def create_superuser(self, email, phone_number=None, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('is_active', True )
 
         return self.create_user(email, phone_number, password, **extra_fields)
 

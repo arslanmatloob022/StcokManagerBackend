@@ -15,15 +15,10 @@ class AuthenticationService:
 
     @staticmethod
     def login(email, password):
-        user: CustomUser = CustomUser.objects.filter(email=email, is_superuser=True).first()
-        # if is_superuser:
-        # else:
-        #     #check not for superuser
-        #     user: CustomUser = CustomUser.objects.filter(email=email, is_superuser=False).first()
-        #     if not user:
-        #         raise AuthenticationFailed('Only store users login allowed')
-            
-        #check if user not active
+        user: CustomUser = CustomUser.objects.filter(email=email).first()
+        print("current user", user)
+        print("activation", user.is_active)
+
         if user is None or not user.is_active:
             raise AuthenticationFailed('User not active ')
         if user is None or not user.check_password(password):
@@ -37,23 +32,7 @@ class AuthenticationService:
 
         return access_token, refresh_token, user
     
-    @staticmethod
-    def login_other_profile(email):
-        
-        user: CustomUser = CustomUser.objects.filter(email=email).first()
 
-        if user is None or not user.is_active:
-            print('before login')
-            raise AuthenticationFailed('User not active ')
-        print('after login')
-
-        # if user.unblock_date is not None and user.unblock_date > timezone.now():
-        #     raise PermissionDenied(f'You were blocked')
-
-        access_token = str(AccessToken.for_user(user))
-        refresh_token = str(RefreshToken.for_user(user))
-
-        return access_token, refresh_token, user
 
     @staticmethod
     def change_password(user: CustomUser, password):

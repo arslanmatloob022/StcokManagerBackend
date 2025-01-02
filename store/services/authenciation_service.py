@@ -16,8 +16,6 @@ class AuthenticationService:
     @staticmethod
     def login(email, password):
         user: CustomUser = CustomUser.objects.filter(email=email).first()
-        print("current user", user)
-        print("activation", user.is_active)
 
         if user is None or not user.is_active:
             raise AuthenticationFailed('User not active ')

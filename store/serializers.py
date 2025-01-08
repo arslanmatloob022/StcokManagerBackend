@@ -1,3 +1,5 @@
+from datetime import datetime
+import json
 from uuid import UUID
 from django.shortcuts import get_object_or_404
 
@@ -88,7 +90,7 @@ class CreateOrderItemSerializer(serializers.Serializer):
     product = serializers.UUIDField()
     quantity = serializers.IntegerField()
     batch = serializers.UUIDField()
-    store = serializers.UUIDField()
+    
     price_per_unit = serializers.DecimalField(max_digits=10, decimal_places=2)
     subtotal = serializers.DecimalField(max_digits=10, decimal_places=2)
 
@@ -97,34 +99,38 @@ class CreateOrderSerializer(serializers.Serializer):
     customer_email = serializers.EmailField()
     status = serializers.CharField(max_length=50, required= False)
     discount = serializers.DecimalField(max_digits=10, decimal_places=2, required=False)
-    orderItems = CreateOrderItemSerializer(many=True)
+    orderItems = serializers.ListField()
+    store = serializers.UUIDField()
     shop_name = serializers.CharField(max_length=255, required=False)
     description = serializers.CharField(max_length=2555, required=False)
     date_issued = serializers.DateTimeField(required=False)
 
     def create(self, validated_data):
+        store = Store.objects.get(id = validated_data['store'])
         items_data = validated_data.pop('orderItems')
         order = Order.objects.create(
             customer_name=validated_data['customer_name'],
             customer_email=validated_data['customer_email'],
-            store = validated_data['store'],
-            status=validated_data['status'],
-            shop_name=validated_data['shop_name'],
-            description=validated_data['description'],
-            date_issued=validated_data['date_issued']
+            store = store,
+            status=validated_data.get('status', 'pending'),
+            shop_name=validated_data.get('shop_name', None),
+            description=validated_data.get('description', None),
+            date_issued=validated_data.get('date_issued', datetime.now().date)
         )
 
         total_amount = 0
-        for item_data in items_data:
+     
+        for item_data in json.loads(items_data[0]):
             item = OrderItem.objects.create(
                 order=order,
-                product_id=item_data['product'],
-                batch_id=item_data['batch'],
-                quantity=item_data['quantity'],
-                price_per_unit=item_data['price_per_unit'],
-                subtotal=item_data['subtotal']
+                product_id=item_data['id'],
+                batch_id=item_data.get('batch', None),
+                quantity=item_data.get('quantity', 1),
+                price_per_unit=item_data.get('price', 1),
+                subtotal=item_data.get('subtotal', 0)
             )
-            total_amount += item.subtotal
+            
+            total_amount += float(item.subtotal)
 
         order.total_amount = total_amount
         order.save()

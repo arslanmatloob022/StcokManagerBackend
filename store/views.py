@@ -140,6 +140,7 @@ class OrderViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.Retrie
 
     @action(detail=False, methods=['post'], url_path='create-order', permission_classes=[IsAuthenticated], serializer_class = serializers.CreateOrderSerializer)
     def create_order(self, request, *args, **kwargs):
+        # print("reques", request.data)
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
